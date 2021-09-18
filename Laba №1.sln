@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30611.23
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Class Polynom", "Class Polynom\Class Polynom.vcxproj", "{86AA016B-F612-48F2-803F-BCFDD975687B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{86AA016B-F612-48F2-803F-BCFDD975687B}.Debug|x64.ActiveCfg = Debug|x64
+		{86AA016B-F612-48F2-803F-BCFDD975687B}.Debug|x64.Build.0 = Debug|x64
+		{86AA016B-F612-48F2-803F-BCFDD975687B}.Debug|x86.ActiveCfg = Debug|Win32
+		{86AA016B-F612-48F2-803F-BCFDD975687B}.Debug|x86.Build.0 = Debug|Win32
+		{86AA016B-F612-48F2-803F-BCFDD975687B}.Release|x64.ActiveCfg = Release|x64
+		{86AA016B-F612-48F2-803F-BCFDD975687B}.Release|x64.Build.0 = Release|x64
+		{86AA016B-F612-48F2-803F-BCFDD975687B}.Release|x86.ActiveCfg = Release|Win32
+		{86AA016B-F612-48F2-803F-BCFDD975687B}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A49EE3B0-64B4-4926-9A63-FF3167C3C78E}
+	EndGlobalSection
+EndGlobal
