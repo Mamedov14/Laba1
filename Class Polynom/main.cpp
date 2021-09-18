@@ -1,3 +1,4 @@
+// нужно дописать функции operator() так как там нет адоптивности под разные степени многочленов!!!!!!!!
 #include <iostream>
 #include <string>
 
@@ -6,18 +7,28 @@ private:
 	int degree = 0;                                       // максимальная степень многочлена .
 	// int* polynomialСoefficient = new int[degree + 1]; // коэффиценты многочлена, которые будут храниться в массиве.
 	int* polynomialСoefficient = nullptr;
-
+	int* newPolynomials = nullptr;
 public:
 	void inputDegree();         // запращивает максимальную степень многочлена.
 	void inputСoefficient();    // запрашивает все коэффициенты многочлена.
 	std::string outputPolinom();    //выводит введенный многочлен.
 	std::string varDegree(int i); // принимает степень многочлена и возвращает строку типа x^i.
+	std::string outputNewPolynomials();    //выводит новый многочлен.
+
 
 	static Polynom sumPolynomials(Polynom& n1, Polynom& n2); // отдельная операция сложения!
 	static Polynom defferencePolynomials(Polynom& n1, Polynom& n2); // отдельная функция вычитания!
 
 	friend Polynom operator+(Polynom& n1, Polynom& n2); // бинарная операция сложения!
 	friend Polynom operator-(Polynom& n1, Polynom& n2); // бинарная операция вычитания!
+
+	friend void swapСoefficient(Polynom& n); // меняет коэффициенты в массиве задом наперед!
+
+	void productPolynomials(Polynom& n1, Polynom& n2);
+
+	int GetDegree() {
+		return degree;
+	}
 
 	Polynom() {
 		inputDegree();
@@ -26,6 +37,12 @@ public:
 	Polynom(int degree) {
 		polynomialСoefficient = new int[degree + 1];
 	}
+
+	Polynom(int d1, int d2) {
+		degree = d1 + d2;
+		newPolynomials = new int[degree];
+	}
+
 	Polynom(Polynom&& other) {
 		this->degree = other.degree;
 		this->polynomialСoefficient = other.polynomialСoefficient;
@@ -71,6 +88,15 @@ int main() {
 	//Polynom number4 = std::move(Polynom::defferencePolynomials(number1, number2)); // второй способ вычесть полиномы
 	Polynom number4 = number1 - number2;
 	std::cout << number4.outputPolinom();
+
+	swapСoefficient(number1);
+	swapСoefficient(number2);
+	//std::cout << "\n" << number1.outputPolinom() << std::endl << number2.outputPolinom() << "\n";
+
+	Polynom number5(number1.GetDegree(), number2.GetDegree());
+	number5.productPolynomials(number1, number2);
+	swapСoefficient(number5);
+	std::cout << number5.outputNewPolynomials();
 
 	std::cout << "\n\n";
 	system("pause");
@@ -125,6 +151,28 @@ std::string Polynom::varDegree(int i) {
 	return temp;
 }
 
+std::string Polynom::outputNewPolynomials()
+{
+	std::string resultPolinim = "";
+	std::cout << "\n\nПроизведение многочленов: ";
+	for (int i = 0; i < degree + 1; i++) {
+		if (i != degree) {
+			resultPolinim += std::to_string(newPolynomials[i]) + varDegree(degree - i);
+		}
+		else {
+			resultPolinim += std::to_string(newPolynomials[i]);
+
+		}
+		if (newPolynomials[i + 1] >= 0 && i >= 0 && i < degree) {
+			resultPolinim += ("+");
+		}
+		else {
+			resultPolinim += ("");
+		}
+	}
+	return resultPolinim;
+}
+
 Polynom Polynom::sumPolynomials(Polynom& n1, Polynom& n2) { // не обязательная функция, чисто для опыта
 	Polynom n3(std::max(n1.degree, n2.degree));
 	for (int i = 0; i < std::max(n1.degree, n2.degree) + 1; i++) {
@@ -147,6 +195,18 @@ Polynom Polynom::defferencePolynomials(Polynom& n1, Polynom& n2) { // не обязате
 	return n3;
 }
 
+void Polynom::productPolynomials(Polynom& n1, Polynom& n2) {
+	for (int i = 0; i < n1.degree + n2.degree + 1; i++)
+	{
+		newPolynomials[i] = 0;
+	}
+	for (int i = 0; i < n1.degree + 1; i++) {
+		for (int j = 0; j < n2.degree + 1; j++) {
+			newPolynomials[i + j] += n1.polynomialСoefficient[i] * n2.polynomialСoefficient[j];
+		}
+	}
+}
+
 Polynom operator+(Polynom& n1, Polynom& n2) {
 	Polynom n3(std::max(n1.degree, n2.degree));
 	for (int i = 0; i < std::max(n1.degree, n2.degree) + 1; i++) {
@@ -167,4 +227,23 @@ Polynom operator-(Polynom& n1, Polynom& n2) {
 		}
 	}
 	return n3;
+}
+
+void swapСoefficient(Polynom& n)
+{
+	//for (int i = 0; i < n.degree / 2; i++)
+	//{
+	//	//n.polynomialСoefficient[i] += n.polynomialСoefficient[n.degree - i - 1];
+	//	//n.polynomialСoefficient[n.degree - i - 1] = n.polynomialСoefficient[i] - n.polynomialСoefficient[n.degree - i - 1];
+	//	//n.polynomialСoefficient[i] -= n.polynomialСoefficient[n.degree - i - 1];
+	//	
+	//}
+
+	if (n.polynomialСoefficient != nullptr) {
+		std::reverse((n.polynomialСoefficient), (n.polynomialСoefficient + n.degree + 1));
+	}
+	else if (n.newPolynomials != nullptr) {
+		std::reverse((n.newPolynomials), (n.newPolynomials + n.degree + 1));
+	}
+
 }
