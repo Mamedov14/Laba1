@@ -12,17 +12,15 @@ public:
 	void inputDegree();         // çàïğàùèâàåò ìàêñèìàëüíóş ñòåïåíü ìíîãî÷ëåíà.
 	void inputÑoefficient();    // çàïğàøèâàåò âñå êîıôôèöèåíòû ìíîãî÷ëåíà.
 	std::string outputPolinom();    //âûâîäèò ââåäåííûé ìíîãî÷ëåí.
-	std::string varDegree(int i); // ïğèíèìàåò ñòåïåíü ìíîãî÷ëåíà è âîçâğàùàåò ñòğîêó òèïà x^i.
 	std::string outputNewPolynomials();    //âûâîäèò íîâûé ìíîãî÷ëåí.
-
+	std::string varDegree(int i); // ïğèíèìàåò ñòåïåíü ìíîãî÷ëåíà è âîçâğàùàåò ñòğîêó òèïà x^i.
 
 	static Polynom sumPolynomials(Polynom& n1, Polynom& n2); // îòäåëüíàÿ îïåğàöèÿ ñëîæåíèÿ!
 	static Polynom defferencePolynomials(Polynom& n1, Polynom& n2); // îòäåëüíàÿ ôóíêöèÿ âû÷èòàíèÿ!
 
 	friend Polynom operator+(Polynom& n1, Polynom& n2); // áèíàğíàÿ îïåğàöèÿ ñëîæåíèÿ!
 	friend Polynom operator-(Polynom& n1, Polynom& n2); // áèíàğíàÿ îïåğàöèÿ âû÷èòàíèÿ!
-
-	friend void swapÑoefficient(Polynom& n); // ìåíÿåò êîıôôèöèåíòû â ìàññèâå çàäîì íàïåğåä!
+	friend void reverseÑoefficient(Polynom& n); // ìåíÿåò êîıôôèöèåíòû â ìàññèâå çàäîì íàïåğåä!
 
 	void productPolynomials(Polynom& n1, Polynom& n2);
 
@@ -35,6 +33,7 @@ public:
 		polynomialÑoefficient = new int[degree + 1];
 	}
 	Polynom(int degree) {
+		this->degree = degree;
 		polynomialÑoefficient = new int[degree + 1];
 	}
 
@@ -79,23 +78,29 @@ int main() {
 	number2.inputÑoefficient();
 	std::cout << number2.outputPolinom();
 
+	reverseÑoefficient(number1);
+	reverseÑoefficient(number2);
+	//std::cout << "\n" << number1.outputPolinom() << std::endl << number2.outputPolinom() << "\n";
+
 	std::cout << "\n\nÑóììà äâóõ ìíîãî÷ëåíîâ!\n";
 	//Polynom number3 = std::move(Polynom::sumPolynomials(number1, number2)); // âòîğîé ñïîñîá ñëîæèòü ïîëèíîìû
 	Polynom number3 = number1 + number2;
+	reverseÑoefficient(number3);
 	std::cout << number3.outputPolinom();
 
 	std::cout << "\n\nĞàçíîñòü äâóõ ìíîãî÷ëåíîâ!\n";
 	//Polynom number4 = std::move(Polynom::defferencePolynomials(number1, number2)); // âòîğîé ñïîñîá âû÷åñòü ïîëèíîìû
 	Polynom number4 = number1 - number2;
+	reverseÑoefficient(number4);
 	std::cout << number4.outputPolinom();
 
-	swapÑoefficient(number1);
-	swapÑoefficient(number2);
+	//reverseÑoefficient(number1);
+	//reverseÑoefficient(number2);
 	//std::cout << "\n" << number1.outputPolinom() << std::endl << number2.outputPolinom() << "\n";
 
 	Polynom number5(number1.GetDegree(), number2.GetDegree());
 	number5.productPolynomials(number1, number2);
-	swapÑoefficient(number5);
+	reverseÑoefficient(number5);
 	std::cout << number5.outputNewPolynomials();
 
 	std::cout << "\n\n";
@@ -134,7 +139,6 @@ std::string Polynom::outputPolinom() {
 		}
 		else {
 			resultPolinim += std::to_string(polynomialÑoefficient[i]);
-
 		}
 		if (polynomialÑoefficient[i + 1] >= 0 && i >= 0 && i < degree) {
 			resultPolinim += ("+");
@@ -209,10 +213,26 @@ void Polynom::productPolynomials(Polynom& n1, Polynom& n2) {
 
 Polynom operator+(Polynom& n1, Polynom& n2) {
 	Polynom n3(std::max(n1.degree, n2.degree));
-	for (int i = 0; i < std::max(n1.degree, n2.degree) + 1; i++) {
-		if (n1.degree == n2.degree) {
+	if (n1.degree == n2.degree) {
+		for (int i = 0; i < std::max(n1.degree, n2.degree) + 1; i++) {
 			n3.degree = n1.degree;
 			n3.polynomialÑoefficient[i] = n1.polynomialÑoefficient[i] + n2.polynomialÑoefficient[i];
+		}
+	}
+	else if (n1.degree > n2.degree) {
+		for (int i = 0; i < n2.degree + 1; i++) {
+			n3.polynomialÑoefficient[i] = n1.polynomialÑoefficient[i] + n2.polynomialÑoefficient[i];
+		}
+		for (int i = n2.degree + 1; i < n1.degree + 1; i++) {
+			n3.polynomialÑoefficient[i] = n1.polynomialÑoefficient[i];
+		}
+	}
+	else if (n1.degree < n2.degree) {
+		for (int i = 0; i < n1.degree + 1; i++) {
+			n3.polynomialÑoefficient[i] = n1.polynomialÑoefficient[i] + n2.polynomialÑoefficient[i];
+		}
+		for (int i = n1.degree + 1; i < n2.degree + 1; i++) {
+			n3.polynomialÑoefficient[i] = n2.polynomialÑoefficient[i];
 		}
 	}
 	return n3;
@@ -220,16 +240,32 @@ Polynom operator+(Polynom& n1, Polynom& n2) {
 
 Polynom operator-(Polynom& n1, Polynom& n2) {
 	Polynom n3(std::max(n1.degree, n2.degree));
-	for (int i = 0; i < std::max(n1.degree, n2.degree) + 1; i++) {
-		if (n1.degree == n2.degree) {
+	if (n1.degree == n2.degree) {
+		for (int i = 0; i < std::max(n1.degree, n2.degree) + 1; i++) {
 			n3.degree = n1.degree;
 			n3.polynomialÑoefficient[i] = n1.polynomialÑoefficient[i] - n2.polynomialÑoefficient[i];
+		}
+	}
+	else if (n1.degree > n2.degree) {
+		for (int i = 0; i < n2.degree + 1; i++) {
+			n3.polynomialÑoefficient[i] = n1.polynomialÑoefficient[i] - n2.polynomialÑoefficient[i];
+		}
+		for (int i = n2.degree + 1; i < n1.degree + 1; i++) {
+			n3.polynomialÑoefficient[i] = n1.polynomialÑoefficient[i];
+		}
+	}
+	else if (n1.degree < n2.degree) {
+		for (int i = 0; i < n1.degree + 1; i++) {
+			n3.polynomialÑoefficient[i] = n1.polynomialÑoefficient[i] - n2.polynomialÑoefficient[i];
+		}
+		for (int i = n1.degree + 1; i < n2.degree + 1; i++) {
+			n3.polynomialÑoefficient[i] = -n2.polynomialÑoefficient[i];
 		}
 	}
 	return n3;
 }
 
-void swapÑoefficient(Polynom& n)
+void reverseÑoefficient(Polynom& n)
 {
 	//for (int i = 0; i < n.degree / 2; i++)
 	//{
