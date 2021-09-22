@@ -23,7 +23,8 @@ public:
 	friend Polynom operator-(Polynom& n1, Polynom& n2); // бинарная операция вычитания!
 	friend void reverseСoefficient(Polynom& n); // меняет коэффициенты в массиве задом наперед!
 
-	void productPolynomials(Polynom& n1, Polynom& n2);
+	void productPolynomials(Polynom& n1, Polynom& n2); // произведение многоленов!
+	static void comparisonPolynomials(Polynom& n1, Polynom& n2); // сравнение многочленов!
 
 	int GetDegree() {
 		return degree;
@@ -95,6 +96,8 @@ int main() {
 	number5.productPolynomials(number1, number2);
 	reverseСoefficient(number5);
 	std::cout << number5.outputNewPolynomials();
+
+	Polynom::comparisonPolynomials(number1, number2);
 
 	std::cout << "\n\n";
 	system("pause");
@@ -204,6 +207,27 @@ void Polynom::productPolynomials(Polynom& n1, Polynom& n2) {
 	}
 }
 
+void Polynom::comparisonPolynomials(Polynom& n1, Polynom& n2) {
+	int j = 0;
+	bool l = true;
+	for (int i = 0; i < n1.degree + 1; i++) {
+		if (n1.polynomialСoefficient[i] == n2.polynomialСoefficient[j]) {
+			l = true;
+			j++;
+		}
+		else {
+			l = false;
+			break;
+		}
+	}
+	if (l) {
+		std::cout << "\n\nМногочлены равны!\n";
+	}
+	else {
+		std::cout << "\n\nМногочлены не равны!\n";
+	}
+}
+
 Polynom operator+(Polynom& n1, Polynom& n2) {
 	Polynom n3(std::max(n1.degree, n2.degree));
 	for (int i = 0; i < std::min(n1.degree, n2.degree) + 1; i++)
@@ -249,5 +273,4 @@ void reverseСoefficient(Polynom& n)
 	else if (n.newPolynomials != nullptr) {
 		std::reverse((n.newPolynomials), (n.newPolynomials + n.degree + 1));
 	}
-
 }
