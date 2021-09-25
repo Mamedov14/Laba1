@@ -197,11 +197,16 @@ std::string Polynom::outputPolinom() {
 	std::string resultPolinim = "";
 	std::cout << "Ïîëó÷èëè ìíîãî÷ëåí âèäà: ";
 	for (int i = 0; i < degree + 1; i++) {
-		if (i != degree) {
+		if (polynomialÑoefficient[i] != 1) {
 			resultPolinim += std::to_string(polynomialÑoefficient[i]) + varDegree(degree - i);
 		}
 		else {
-			resultPolinim += std::to_string(polynomialÑoefficient[i]);
+			if (polynomialÑoefficient[i] == 1 && (degree - i == 0)) {
+				resultPolinim += "1";
+			}
+			else {
+				resultPolinim += varDegree(degree - i);
+			}
 		}
 		if (polynomialÑoefficient[i + 1] >= 0 && i >= 0 && i < degree) {
 			resultPolinim += ("+");
@@ -214,7 +219,17 @@ std::string Polynom::outputPolinom() {
 }
 
 std::string Polynom::varDegree(int i) {
-	std::string temp = "x^" + std::to_string(i);
+	std::string temp;
+	if (i == 1) {
+		temp = "x";
+	}
+	else if (i == 0)
+	{
+		temp = "";
+	}
+	else {
+		temp = "x^" + std::to_string(i);
+	}
 	return temp;
 }
 
@@ -223,12 +238,16 @@ std::string Polynom::outputNewPolynomials()
 	std::string resultPolinim = "";
 	std::cout << "\n\nÏğîèçâåäåíèå ìíîãî÷ëåíîâ: ";
 	for (int i = 0; i < degree + 1; i++) {
-		if (i != degree) {
+		if (newPolynomials[i] != 1) {
 			resultPolinim += std::to_string(newPolynomials[i]) + varDegree(degree - i);
 		}
 		else {
-			resultPolinim += std::to_string(newPolynomials[i]);
-
+			if (newPolynomials[i] == 1 && (degree - i == 0)) {
+				resultPolinim += "1";
+			}
+			else {
+				resultPolinim += varDegree(degree - i);
+			}
 		}
 		if (newPolynomials[i + 1] >= 0 && i >= 0 && i < degree) {
 			resultPolinim += ("+");
@@ -384,7 +403,7 @@ int getVariant(int count) {
 	variant = std::stoi(str); // string to integer!
 	while (variant < 1 || variant > count) {
 		std::cout << "Îøáèêà!\nÒàêîé îïåğàöèè íåò!\nÂûáåğåòå äğóãóş îïåğàöèş!\n"; // âûâîäèì ñîîáùåíèå îá îøèáêå
-		std::cin>>str; // ñ÷èòûâàåì ñòğîêó ïîâòîğíî
+		std::cin >> str; // ñ÷èòûâàåì ñòğîêó ïîâòîğíî
 		variant = std::stoi(str);
 	}
 
