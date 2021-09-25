@@ -1,8 +1,13 @@
 #include <iostream>
 #include <string>
+#include <io.h>
+#include <fcntl.h>
+#include <stdexcept>
 
 void MainMenu();
 int getVariant(int count);
+wchar_t digitToSuperscript(unsigned int digit);
+
 
 class Polynom {
 
@@ -15,9 +20,9 @@ private:
 public:
 	void inputDegree();         // запращивает максимальную степень многочлена.
 	void inputСoefficient();    // запрашивает все коэффициенты многочлена.
-	std::string outputPolinom();    //выводит введенный многочлен.
-	std::string outputNewPolynomials();    //выводит новый многочлен.
-	std::string varDegree(int i); // принимает степень многочлена и возвращает строку типа x^i.
+	std::wstring outputPolinom();    //выводит введенный многочлен.
+	std::wstring outputNewPolynomials();    //выводит новый многочлен.
+	std::wstring varDegree(int i); // принимает степень многочлена и возвращает строку типа x^i.
 
 	static Polynom sumPolynomials(Polynom& n1, Polynom& n2); // отдельная операция сложения!
 	static Polynom defferencePolynomials(Polynom& n1, Polynom& n2); // отдельная функция вычитания!
@@ -72,15 +77,19 @@ public:
 int main() {
 	setlocale(LC_ALL, "rus");
 
-	std::cout << "Первый многочлен!\n";
+	_setmode(_fileno(stdout), _O_U16TEXT);
+	_setmode(_fileno(stdin), _O_U16TEXT);
+	_setmode(_fileno(stderr), _O_U16TEXT);
+
+	std::wcout << L"Первый многочлен!\n";
 	Polynom number1;
 	number1.inputСoefficient();
-	std::cout << number1.outputPolinom();
+	std::wcout << number1.outputPolinom();
 
-	std::cout << "\n\nВторой многочлен!\n";
+	std::wcout << L"\n\nВторой многочлен!\n";
 	Polynom number2;
 	number2.inputСoefficient();
-	std::cout << number2.outputPolinom();
+	std::wcout << number2.outputPolinom();
 
 	int variant;
 	do {
@@ -89,75 +98,76 @@ int main() {
 		switch (variant)
 		{
 		case 1: {
-			std::cout << "Первый многочлен!\n";
-			std::cout << number1.outputPolinom();
-			std::cout << "\n\nВторой многочлен!\n";
-			std::cout << number2.outputPolinom();
+			std::wcout << L"Первый многочлен!\n";
+			std::wcout << number1.outputPolinom();
+			std::wcout << L"\n\nВторой многочлен!\n";
+			std::wcout << number2.outputPolinom();
 			reverseСoefficient(number1);
 			reverseСoefficient(number2);
 
-			std::cout << "\n\nСумма двух многочленов!\n";
+			std::wcout << L"\n\nСумма двух многочленов!\n";
 			//Polynom number3 = std::move(Polynom::sumPolynomials(number1, number2)); // второй способ сложить полиномы
 			Polynom number3 = number1 + number2;
 			reverseСoefficient(number3);
-			std::cout << number3.outputPolinom();
-			std::cout << "\n\n";
+			std::wcout << number3.outputPolinom();
+			std::wcout << "\n\n";
 			break;
 		}
 		case 2: {
-			std::cout << "Первый многочлен!\n";
-			std::cout << number1.outputPolinom();
-			std::cout << "\n\nВторой многочлен!\n";
-			std::cout << number2.outputPolinom();
+			std::wcout << L"Первый многочлен!\n";
+			std::wcout << number1.outputPolinom();
+			std::wcout << L"\n\nВторой многочлен!\n";
+			std::wcout << number2.outputPolinom();
 			reverseСoefficient(number1);
 			reverseСoefficient(number2);
 
-			std::cout << "\n\nРазность двух многочленов!\n";
+			std::wcout << L"\n\nРазность двух многочленов!\n";
 			//Polynom number4 = std::move(Polynom::defferencePolynomials(number1, number2)); // второй способ вычесть полиномы
 			Polynom number4 = number1 - number2;
 			reverseСoefficient(number4);
-			std::cout << number4.outputPolinom();
-			std::cout << "\n\n";
+			std::wcout << number4.outputPolinom();
+			std::wcout << L"\n\n";
 			break;
 		}
 		case 3: {
-			std::cout << "Первый многочлен!\n";
-			std::cout << number1.outputPolinom();
-			std::cout << "\n\nВторой многочлен!\n";
-			std::cout << number2.outputPolinom();
+			std::wcout << L"Первый многочлен!\n";
+			std::wcout << number1.outputPolinom();
+			std::wcout << L"\n\nВторой многочлен!\n";
+			std::wcout << number2.outputPolinom();
 			reverseСoefficient(number1);
 			reverseСoefficient(number2);
 
+			std::wcout << L"\n\nПроизведение: ";
 			Polynom number5(number1.GetDegree(), number2.GetDegree());
 			number5.productPolynomials(number1, number2);
 			reverseСoefficient(number5);
-			std::cout << number5.outputNewPolynomials();
-			std::cout << "\n\n";
+			std::wcout << number5.outputNewPolynomials();
+			std::wcout << "\n\n";
 			break;
 		}
 		case 4: {
-			std::cout << "Первый многочлен!\n";
-			std::cout << number1.outputPolinom();
-			std::cout << "\n\nВторой многочлен!\n";
-			std::cout << number2.outputPolinom();
+			std::wcout << L"Первый многочлен!\n";
+			std::wcout << number1.outputPolinom();
+			std::wcout << L"\n\nВторой многочлен!\n";
+			std::wcout << number2.outputPolinom();
 			reverseСoefficient(number1);
 			reverseСoefficient(number2);
 
 			Polynom::comparisonPolynomials(number1, number2);
-			std::cout << "\n\n";
+			std::wcout << "\n\n";
 			break;
 		}
 		case 5: {
-			std::cout << "Первый многочлен!\n";
-			std::cout << number1.outputPolinom();
+			std::wcout << L"Первый многочлен!\n";
+			std::wcout << number1.outputPolinom();
 			reverseСoefficient(number1);
 
-			std::cout << "\n\nПродифференцировали многочлен: \n";
+			std::wcout << L"\n\nПродифференцировали многочлен: \n";
 			Polynom number6(number1.GetDegree());
 			number6.polynomialDifferentiation(number1);
 			reverseСoefficient(number6);
-			std::cout << number6.outputPolinom();
-			std::cout << "\n\n";
+			std::wcout << number6.outputPolinom();
+			std::wcout << "\n\n";
 			break;
 		}
 		}
@@ -166,94 +176,107 @@ int main() {
 		}
 	} while (variant != 6);
 
-	std::cout << "\n\n";
+	std::wcout << "\n\n";
 	system("pause");
 	return 0;
 }
 
 void Polynom::inputDegree() {
-	std::cout << "Введите максимальную степень многочлена: ";
-	std::cin >> degree;
+	std::wcout << L"Введите максимальную степень многочлена: ";
+	std::wcin >> degree;
 }
 
 void Polynom::inputСoefficient() {
 	for (int i = 0; i < degree + 1; i++) {
 		if (i == 0) {
-			std::cout << "Введите коэффициент при максимальной степени: ";
-			std::cin >> polynomialСoefficient[i];
-			std::cout << "Продолжайте вводить коэффициенты последовательно:\n";
+			std::wcout << L"Введите коэффициент при максимальной степени: ";
+			std::wcin >> polynomialСoefficient[i];
+			std::wcout << L"Продолжайте вводить коэффициенты последовательно:\n";
 		}
 		else if (i == degree) {
-			std::cout << "Введите свободный элемент многочлена: ";
-			std::cin >> polynomialСoefficient[degree];
+			std::wcout << L"Введите свободный элемент многочлена: ";
+			std::wcin >> polynomialСoefficient[degree];
 		}
 		else {
-			std::cin >> polynomialСoefficient[i];
+			std::wcin >> polynomialСoefficient[i];
 		}
 	}
 }
 
-std::string Polynom::outputPolinom() {
-	std::string resultPolinim = "";
-	std::cout << "Получили многочлен вида: ";
+std::wstring Polynom::outputPolinom() {
+	std::wstring resultPolinim = L"";
+	std::wcout << L"Получили многочлен вида: ";
 	for (int i = 0; i < degree + 1; i++) {
-		if (polynomialСoefficient[i] != 1) {
-			resultPolinim += std::to_string(polynomialСoefficient[i]) + varDegree(degree - i);
+		if (polynomialСoefficient[i] != 1 && (degree - i != 0)) {
+			resultPolinim += std::to_wstring(polynomialСoefficient[i]);
+			resultPolinim += L"x";
+			resultPolinim += digitToSuperscript(degree - i);
 		}
 		else {
 			if (polynomialСoefficient[i] == 1 && (degree - i == 0)) {
-				resultPolinim += "1";
+				resultPolinim += L"1";
+			}
+			else if ((polynomialСoefficient[i] != 1 && (degree - i == 0))) {
+				resultPolinim += std::to_wstring(polynomialСoefficient[i]);
 			}
 			else {
-				resultPolinim += varDegree(degree - i);
+				resultPolinim += std::to_wstring(polynomialСoefficient[i]);
+				resultPolinim += L"x";
+				resultPolinim += digitToSuperscript(degree - i);
 			}
 		}
 		if (polynomialСoefficient[i + 1] >= 0 && i >= 0 && i < degree) {
-			resultPolinim += ("+");
+			resultPolinim += L"+";
 		}
 		else {
-			resultPolinim += ("");
+			resultPolinim += L"";
 		}
 	}
 	return resultPolinim;
 }
 
-std::string Polynom::varDegree(int i) {
-	std::string temp;
+std::wstring Polynom::varDegree(int i) {
+	std::wstring temp;
 	if (i == 1) {
-		temp = "x";
+		temp = L"x";
 	}
 	else if (i == 0)
 	{
-		temp = "";
+		temp = L"";
 	}
 	else {
-		temp = "x^" + std::to_string(i);
+		temp = L"x^" + std::to_wstring(i);
 	}
 	return temp;
 }
 
-std::string Polynom::outputNewPolynomials()
-{
-	std::string resultPolinim = "";
-	std::cout << "\n\nПроизведение многочленов: ";
+std::wstring Polynom::outputNewPolynomials() {
+	std::wstring resultPolinim = L"";
+	std::wcout << L"\nПолучили многочлен вида: ";
 	for (int i = 0; i < degree + 1; i++) {
-		if (newPolynomials[i] != 1) {
-			resultPolinim += std::to_string(newPolynomials[i]) + varDegree(degree - i);
+		if (newPolynomials[i] != 1 && (degree - i != 0)) {
+			resultPolinim += std::to_wstring(newPolynomials[i]);
+			resultPolinim += L"x";
+			resultPolinim += digitToSuperscript(degree - i);
 		}
 		else {
 			if (newPolynomials[i] == 1 && (degree - i == 0)) {
-				resultPolinim += "1";
+				resultPolinim += L"1";
+			}
+			else if ((newPolynomials[i] != 1 && (degree - i == 0))) {
+				resultPolinim += std::to_wstring(newPolynomials[i]);
 			}
 			else {
-				resultPolinim += varDegree(degree - i);
+				resultPolinim += std::to_wstring(newPolynomials[i]);
+				resultPolinim += L"x";
+				resultPolinim += digitToSuperscript(degree - i);
 			}
 		}
 		if (newPolynomials[i + 1] >= 0 && i >= 0 && i < degree) {
-			resultPolinim += ("+");
+			resultPolinim += L"+";
 		}
 		else {
-			resultPolinim += ("");
+			resultPolinim += L"";
 		}
 	}
 	return resultPolinim;
@@ -313,10 +336,10 @@ void Polynom::comparisonPolynomials(Polynom& n1, Polynom& n2) {
 		}
 	}
 	if (l) {
-		std::cout << "\n\nМногочлены равны!\n";
+		std::wcout << L"\n\nМногочлены равны!\n";
 	}
 	else {
-		std::cout << "\n\nМногочлены не равны!\n";
+		std::wcout << L"\n\nМногочлены не равны!\n";
 	}
 }
 
@@ -385,27 +408,43 @@ void reverseСoefficient(Polynom& n)
 
 void MainMenu() {
 	system("cls"); // очищаем экран
-	std::cout << "\nВыберети операцию над многочленами: \n";
-	std::cout << "1. Сложить многочлены.\n";
-	std::cout << "2. Вычесть многочлены.\n";
-	std::cout << "3. Перемножить многочлены.\n";
-	std::cout << "4. Сравнить многочлены.\n";
-	std::cout << "5. Продифференцировать многочлены.\n";
-	std::cout << "6. Выход из меню.\n";
+	std::wcout << L"\nВыберети операцию над многочленами: \n";
+	std::wcout << L"1. Сложить многочлены.\n";
+	std::wcout << L"2. Вычесть многочлены.\n";
+	std::wcout << L"3. Перемножить многочлены.\n";
+	std::wcout << L"4. Сравнить многочлены.\n";
+	std::wcout << L"5. Продифференцировать многочлены.\n";
+	std::wcout << L"6. Выход из меню.\n";
 }
 
 int getVariant(int count) {
 	int variant;
-	std::string str; // строка для считывания введённых данных
-	std::cin >> str; // считываем строку
+	std::wstring str; // строка для считывания введённых данных
+	std::wcin >> str; // считываем строку
 
 	// пока ввод некорректен, сообщаем об этом и просим повторить его
 	variant = std::stoi(str); // string to integer!
 	while (variant < 1 || variant > count) {
-		std::cout << "Ошбика!\nТакой операции нет!\nВыберете другую операцию!\n"; // выводим сообщение об ошибке
-		std::cin >> str; // считываем строку повторно
+		std::wcout << L"Ошбика!\nТакой операции нет!\nВыберете другую операцию!\n"; // выводим сообщение об ошибке
+		std::wcin >> str; // считываем строку повторно
 		variant = std::stoi(str);
 	}
 
 	return variant;
+}
+
+wchar_t digitToSuperscript(unsigned int digit) {
+	char s = '\0';
+	switch (digit) {
+	case 0:
+		return s;
+	case 1:
+		return 0x00B9;
+	case 2:
+		return 0x00B2;
+	case 3:
+		return 0x00B3;
+	default:
+		return 0x2070 + digit;
+	}
 }
