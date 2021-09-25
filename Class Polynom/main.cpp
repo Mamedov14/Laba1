@@ -383,9 +383,9 @@ int getVariant(int count) {
 	// пока ввод некорректен, сообщаем об этом и просим повторить его
 	variant = std::stoi(str); // string to integer!
 	while (variant < 1 || variant > count) {
+		std::cout << "Ошбика!\nТакой операции нет!\nВыберете другую операцию!\n"; // выводим сообщение об ошибке
+		std::cin>>str; // считываем строку повторно
 		variant = std::stoi(str);
-		std::cout << "Error!"; // выводим сообщение об ошибке
-		std::getline(std::cin, str); // считываем строку повторно
 	}
 
 	return variant;
