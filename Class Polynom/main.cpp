@@ -1,14 +1,14 @@
-// сравнение и дифференцирование!
-
 #include <iostream>
 #include <string>
 
 class Polynom {
+
 private:
 	int degree = 0;                                       // максимальная степень многочлена .
 	// int* polynomialСoefficient = new int[degree + 1]; // коэффиценты многочлена, которые будут храниться в массиве.
 	int* polynomialСoefficient = nullptr;
 	int* newPolynomials = nullptr;
+
 public:
 	void inputDegree();         // запращивает максимальную степень многочлена.
 	void inputСoefficient();    // запрашивает все коэффициенты многочлена.
@@ -25,6 +25,8 @@ public:
 
 	void productPolynomials(Polynom& n1, Polynom& n2); // произведение многоленов!
 	static void comparisonPolynomials(Polynom& n1, Polynom& n2); // сравнение многочленов!
+	void polynomialDifferentiation(Polynom& n1); //дифференцирование многочлена!
+
 
 	int GetDegree() {
 		return degree;
@@ -98,6 +100,12 @@ int main() {
 	std::cout << number5.outputNewPolynomials();
 
 	Polynom::comparisonPolynomials(number1, number2);
+
+	std::cout << "\n\nПродифференцировали многочлен: \n";
+	Polynom number6(number1.GetDegree());
+	number6.polynomialDifferentiation(number1);
+	reverseСoefficient(number6);
+	std::cout << number6.outputPolinom();
 
 	std::cout << "\n\n";
 	system("pause");
@@ -211,9 +219,15 @@ void Polynom::comparisonPolynomials(Polynom& n1, Polynom& n2) {
 	int j = 0;
 	bool l = true;
 	for (int i = 0; i < n1.degree + 1; i++) {
-		if (n1.polynomialСoefficient[i] == n2.polynomialСoefficient[j]) {
-			l = true;
-			j++;
+		if (n1.degree == n2.degree) {
+			if (n1.polynomialСoefficient[i] == n2.polynomialСoefficient[j]) {
+				l = true;
+				j++;
+			}
+			else {
+				l = false;
+				break;
+			}
 		}
 		else {
 			l = false;
@@ -226,6 +240,22 @@ void Polynom::comparisonPolynomials(Polynom& n1, Polynom& n2) {
 	else {
 		std::cout << "\n\nМногочлены не равны!\n";
 	}
+}
+
+void Polynom::polynomialDifferentiation(Polynom& n1) {
+	for (int i = 0; i < n1.degree + 1; i++) {
+
+		polynomialСoefficient[i] = 0;
+	}
+	for (int i = 0; i < n1.degree + 1; i++) {
+
+		polynomialСoefficient[i] = i * n1.polynomialСoefficient[i];
+	}
+	for (int i = 0; i < n1.degree; i++) {
+
+		polynomialСoefficient[i] = polynomialСoefficient[i + 1];
+	}
+	degree--;
 }
 
 Polynom operator+(Polynom& n1, Polynom& n2) {
