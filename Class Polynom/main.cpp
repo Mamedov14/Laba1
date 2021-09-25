@@ -1,6 +1,9 @@
 #include <iostream>
 #include <string>
 
+void MainMenu();
+int getVariant(int count);
+
 class Polynom {
 
 private:
@@ -79,33 +82,89 @@ int main() {
 	number2.inputСoefficient();
 	std::cout << number2.outputPolinom();
 
-	reverseСoefficient(number1);
-	reverseСoefficient(number2);
+	int variant;
+	do {
+		MainMenu();
+		variant = getVariant(6);
+		switch (variant)
+		{
+		case 1: {
+			std::cout << "Первый многочлен!\n";
+			std::cout << number1.outputPolinom();
+			std::cout << "\n\nВторой многочлен!\n";
+			std::cout << number2.outputPolinom();
+			reverseСoefficient(number1);
+			reverseСoefficient(number2);
 
-	std::cout << "\n\nСумма двух многочленов!\n";
-	//Polynom number3 = std::move(Polynom::sumPolynomials(number1, number2)); // второй способ сложить полиномы
-	Polynom number3 = number1 + number2;
-	reverseСoefficient(number3);
-	std::cout << number3.outputPolinom();
+			std::cout << "\n\nСумма двух многочленов!\n";
+			//Polynom number3 = std::move(Polynom::sumPolynomials(number1, number2)); // второй способ сложить полиномы
+			Polynom number3 = number1 + number2;
+			reverseСoefficient(number3);
+			std::cout << number3.outputPolinom();
+			std::cout << "\n\n";
+			break;
+		}
+		case 2: {
+			std::cout << "Первый многочлен!\n";
+			std::cout << number1.outputPolinom();
+			std::cout << "\n\nВторой многочлен!\n";
+			std::cout << number2.outputPolinom();
+			reverseСoefficient(number1);
+			reverseСoefficient(number2);
 
-	std::cout << "\n\nРазность двух многочленов!\n";
-	//Polynom number4 = std::move(Polynom::defferencePolynomials(number1, number2)); // второй способ вычесть полиномы
-	Polynom number4 = number1 - number2;
-	reverseСoefficient(number4);
-	std::cout << number4.outputPolinom();
+			std::cout << "\n\nРазность двух многочленов!\n";
+			//Polynom number4 = std::move(Polynom::defferencePolynomials(number1, number2)); // второй способ вычесть полиномы
+			Polynom number4 = number1 - number2;
+			reverseСoefficient(number4);
+			std::cout << number4.outputPolinom();
+			std::cout << "\n\n";
+			break;
+		}
+		case 3: {
+			std::cout << "Первый многочлен!\n";
+			std::cout << number1.outputPolinom();
+			std::cout << "\n\nВторой многочлен!\n";
+			std::cout << number2.outputPolinom();
+			reverseСoefficient(number1);
+			reverseСoefficient(number2);
 
-	Polynom number5(number1.GetDegree(), number2.GetDegree());
-	number5.productPolynomials(number1, number2);
-	reverseСoefficient(number5);
-	std::cout << number5.outputNewPolynomials();
+			Polynom number5(number1.GetDegree(), number2.GetDegree());
+			number5.productPolynomials(number1, number2);
+			reverseСoefficient(number5);
+			std::cout << number5.outputNewPolynomials();
+			std::cout << "\n\n";
+			break;
+		}
+		case 4: {
+			std::cout << "Первый многочлен!\n";
+			std::cout << number1.outputPolinom();
+			std::cout << "\n\nВторой многочлен!\n";
+			std::cout << number2.outputPolinom();
+			reverseСoefficient(number1);
+			reverseСoefficient(number2);
 
-	Polynom::comparisonPolynomials(number1, number2);
+			Polynom::comparisonPolynomials(number1, number2);
+			std::cout << "\n\n";
+			break;
+		}
+		case 5: {
+			std::cout << "Первый многочлен!\n";
+			std::cout << number1.outputPolinom();
+			reverseСoefficient(number1);
 
-	std::cout << "\n\nПродифференцировали многочлен: \n";
-	Polynom number6(number1.GetDegree());
-	number6.polynomialDifferentiation(number1);
-	reverseСoefficient(number6);
-	std::cout << number6.outputPolinom();
+			std::cout << "\n\nПродифференцировали многочлен: \n";
+			Polynom number6(number1.GetDegree());
+			number6.polynomialDifferentiation(number1);
+			reverseСoefficient(number6);
+			std::cout << number6.outputPolinom();
+			std::cout << "\n\n";
+			break;
+		}
+		}
+		if (variant != 6) {
+			system("pause"); // задерживаем выполнение, чтобы пользователь мог увидеть результат выполнения выбранного пункта
+		}
+	} while (variant != 6);
 
 	std::cout << "\n\n";
 	system("pause");
@@ -303,4 +362,31 @@ void reverseСoefficient(Polynom& n)
 	else if (n.newPolynomials != nullptr) {
 		std::reverse((n.newPolynomials), (n.newPolynomials + n.degree + 1));
 	}
+}
+
+void MainMenu() {
+	system("cls"); // очищаем экран
+	std::cout << "\nВыберети операцию над многочленами: \n";
+	std::cout << "1. Сложить многочлены.\n";
+	std::cout << "2. Вычесть многочлены.\n";
+	std::cout << "3. Перемножить многочлены.\n";
+	std::cout << "4. Сравнить многочлены.\n";
+	std::cout << "5. Продифференцировать многочлены.\n";
+	std::cout << "6. Выход из меню.\n";
+}
+
+int getVariant(int count) {
+	int variant;
+	std::string str; // строка для считывания введённых данных
+	std::cin >> str; // считываем строку
+
+	// пока ввод некорректен, сообщаем об этом и просим повторить его
+	variant = std::stoi(str); // string to integer!
+	while (variant < 1 || variant > count) {
+		variant = std::stoi(str);
+		std::cout << "Error!"; // выводим сообщение об ошибке
+		std::getline(std::cin, str); // считываем строку повторно
+	}
+
+	return variant;
 }
