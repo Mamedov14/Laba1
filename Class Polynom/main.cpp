@@ -207,29 +207,35 @@ std::wstring Polynom::outputPolinom() {
 	std::wstring resultPolinim = L"";
 	std::wcout << L"Ïîëó÷èëè ìíîãî÷ëåí âèäà: ";
 	for (int i = 0; i < degree + 1; i++) {
-		if (polynomialÑoefficient[i] != 1 && (degree - i != 0)) {
+		if (polynomialÑoefficient[i] == 0)
+		{
+			resultPolinim += L"";
+		}
+		else if (polynomialÑoefficient[i] == 1 && (degree - i == 0)) {
+			resultPolinim += L"1";
+		}
+		else if (polynomialÑoefficient[i] == 1 && (degree - i != 0)) {
+			resultPolinim += L"x";
+			resultPolinim += digitToSuperscript(degree - i);
+		}
+		else if (polynomialÑoefficient[i] == 1 && (degree - i == 1)) {
+			resultPolinim += L"x";
+		}
+		else if (polynomialÑoefficient[i] != 1 && (degree - i == 0)) {
+			resultPolinim += std::to_wstring(polynomialÑoefficient[i]);
+		}
+		else if (polynomialÑoefficient[i] != 1 && (degree - i != 0)) {
 			resultPolinim += std::to_wstring(polynomialÑoefficient[i]);
 			resultPolinim += L"x";
 			resultPolinim += digitToSuperscript(degree - i);
 		}
-		else {
-			if (polynomialÑoefficient[i] == 1 && (degree - i == 0)) {
-				resultPolinim += L"1";
-			}
-			else if ((polynomialÑoefficient[i] != 1 && (degree - i == 0))) {
-				resultPolinim += std::to_wstring(polynomialÑoefficient[i]);
+		if (polynomialÑoefficient[i + 1] != 0) {
+			if (polynomialÑoefficient[i + 1] >= 0 && i >= 0 && i < degree) {
+				resultPolinim += L"+";
 			}
 			else {
-				resultPolinim += std::to_wstring(polynomialÑoefficient[i]);
-				resultPolinim += L"x";
-				resultPolinim += digitToSuperscript(degree - i);
+				resultPolinim += L"";
 			}
-		}
-		if (polynomialÑoefficient[i + 1] >= 0 && i >= 0 && i < degree) {
-			resultPolinim += L"+";
-		}
-		else {
-			resultPolinim += L"";
 		}
 	}
 	return resultPolinim;
@@ -252,31 +258,37 @@ std::wstring Polynom::varDegree(int i) {
 
 std::wstring Polynom::outputNewPolynomials() {
 	std::wstring resultPolinim = L"";
-	std::wcout << L"\nÏîëó÷èëè ìíîãî÷ëåí âèäà: ";
+	std::wcout << L"Ïîëó÷èëè ìíîãî÷ëåí âèäà: ";
 	for (int i = 0; i < degree + 1; i++) {
-		if (newPolynomials[i] != 1 && (degree - i != 0)) {
+		if (newPolynomials[i] == 0)
+		{
+			resultPolinim += L"";
+		}
+		else if (newPolynomials[i] == 1 && (degree - i == 0)) {
+			resultPolinim += L"1";
+		}
+		else if (newPolynomials[i] == 1 && (degree - i != 0)) {
+			resultPolinim += L"x";
+			resultPolinim += digitToSuperscript(degree - i);
+		}
+		else if (newPolynomials[i] == 1 && (degree - i == 1)) {
+			resultPolinim += L"x";
+		}
+		else if (newPolynomials[i] != 1 && (degree - i == 0)) {
+			resultPolinim += std::to_wstring(newPolynomials[i]);
+		}
+		else if (newPolynomials[i] != 1 && (degree - i != 0)) {
 			resultPolinim += std::to_wstring(newPolynomials[i]);
 			resultPolinim += L"x";
 			resultPolinim += digitToSuperscript(degree - i);
 		}
-		else {
-			if (newPolynomials[i] == 1 && (degree - i == 0)) {
-				resultPolinim += L"1";
-			}
-			else if ((newPolynomials[i] != 1 && (degree - i == 0))) {
-				resultPolinim += std::to_wstring(newPolynomials[i]);
+		if (newPolynomials[i + 1] != 0) {
+			if (newPolynomials[i + 1] >= 0 && i >= 0 && i < degree) {
+				resultPolinim += L"+";
 			}
 			else {
-				resultPolinim += std::to_wstring(newPolynomials[i]);
-				resultPolinim += L"x";
-				resultPolinim += digitToSuperscript(degree - i);
+				resultPolinim += L"";
 			}
-		}
-		if (newPolynomials[i + 1] >= 0 && i >= 0 && i < degree) {
-			resultPolinim += L"+";
-		}
-		else {
-			resultPolinim += L"";
 		}
 	}
 	return resultPolinim;
