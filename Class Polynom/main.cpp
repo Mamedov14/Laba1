@@ -91,6 +91,9 @@ int main() {
 	number2.inputÑoefficient();
 	std::wcout << number2.outputPolinom();
 
+	reverseÑoefficient(number1);
+	reverseÑoefficient(number2);
+
 	int variant;
 	do {
 		MainMenu();
@@ -98,13 +101,6 @@ int main() {
 		switch (variant)
 		{
 		case 1: {
-			std::wcout << L"Ïåğâûé ìíîãî÷ëåí!\n";
-			std::wcout << number1.outputPolinom();
-			std::wcout << L"\n\nÂòîğîé ìíîãî÷ëåí!\n";
-			std::wcout << number2.outputPolinom();
-			reverseÑoefficient(number1);
-			reverseÑoefficient(number2);
-
 			std::wcout << L"\n\nÑóììà äâóõ ìíîãî÷ëåíîâ!\n";
 			//Polynom number3 = std::move(Polynom::sumPolynomials(number1, number2)); // âòîğîé ñïîñîá ñëîæèòü ïîëèíîìû
 			Polynom number3 = number1 + number2;
@@ -114,13 +110,6 @@ int main() {
 			break;
 		}
 		case 2: {
-			std::wcout << L"Ïåğâûé ìíîãî÷ëåí!\n";
-			std::wcout << number1.outputPolinom();
-			std::wcout << L"\n\nÂòîğîé ìíîãî÷ëåí!\n";
-			std::wcout << number2.outputPolinom();
-			reverseÑoefficient(number1);
-			reverseÑoefficient(number2);
-
 			std::wcout << L"\n\nĞàçíîñòü äâóõ ìíîãî÷ëåíîâ!\n";
 			//Polynom number4 = std::move(Polynom::defferencePolynomials(number1, number2)); // âòîğîé ñïîñîá âû÷åñòü ïîëèíîìû
 			Polynom number4 = number1 - number2;
@@ -130,13 +119,6 @@ int main() {
 			break;
 		}
 		case 3: {
-			std::wcout << L"Ïåğâûé ìíîãî÷ëåí!\n";
-			std::wcout << number1.outputPolinom();
-			std::wcout << L"\n\nÂòîğîé ìíîãî÷ëåí!\n";
-			std::wcout << number2.outputPolinom();
-			reverseÑoefficient(number1);
-			reverseÑoefficient(number2);
-
 			std::wcout << L"\n\nÏğîèçâåäåíèå: ";
 			Polynom number5(number1.GetDegree(), number2.GetDegree());
 			number5.productPolynomials(number1, number2);
@@ -146,22 +128,11 @@ int main() {
 			break;
 		}
 		case 4: {
-			std::wcout << L"Ïåğâûé ìíîãî÷ëåí!\n";
-			std::wcout << number1.outputPolinom();
-			std::wcout << L"\n\nÂòîğîé ìíîãî÷ëåí!\n";
-			std::wcout << number2.outputPolinom();
-			reverseÑoefficient(number1);
-			reverseÑoefficient(number2);
-
 			Polynom::comparisonPolynomials(number1, number2);
 			std::wcout << "\n\n";
 			break;
 		}
 		case 5: {
-			std::wcout << L"Ïåğâûé ìíîãî÷ëåí!\n";
-			std::wcout << number1.outputPolinom();
-			reverseÑoefficient(number1);
-
 			std::wcout << L"\n\nÏğîäèôôåğåíöèğîâàëè ìíîãî÷ëåí: \n";
 			Polynom number6(number1.GetDegree());
 			number6.polynomialDifferentiation(number1);
