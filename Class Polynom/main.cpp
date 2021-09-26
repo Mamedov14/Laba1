@@ -171,22 +171,37 @@ std::string Polynom::outputPolinom() {
 	std::string resultPolinim = "";
 	std::cout << "Ïîëó÷èëè ìíîãî÷ëåí âèäà: ";
 	for (int i = 0; i < degree + 1; i++) {
-		if (polynomialÑoefficient[i] != 1) {
-			resultPolinim += std::to_string(polynomialÑoefficient[i]) + varDegree(degree - i);
+		if (polynomialÑoefficient[i] == 0)
+		{
+			resultPolinim += "";
 		}
-		else {
-			if (polynomialÑoefficient[i] == 1 && (degree - i == 0)) {
-				resultPolinim += "1";
+		else if (polynomialÑoefficient[i] == 1 && (degree - i == 0)) {
+			resultPolinim += "1";
+		}
+		else if (polynomialÑoefficient[i] == -1 && (degree - i != 0)) {
+			resultPolinim += "-";
+			resultPolinim += varDegree(degree - i);
+		}
+		else if (polynomialÑoefficient[i] == 1 && (degree - i != 0)) {
+			resultPolinim += varDegree(degree - i);
+		}
+		else if (polynomialÑoefficient[i] == 1 && (degree - i == 1)) {
+			resultPolinim += "x";
+		}
+		else if (polynomialÑoefficient[i] != 1 && (degree - i == 0)) {
+			resultPolinim += std::to_string(polynomialÑoefficient[i]);
+		}
+		else if (polynomialÑoefficient[i] != 1 && (degree - i != 0)) {
+			resultPolinim += std::to_string(polynomialÑoefficient[i]);
+			resultPolinim += varDegree(degree - i);
+		}
+		if (polynomialÑoefficient[i + 1] != 0) {
+			if (polynomialÑoefficient[i + 1] >= 0 && i >= 0 && i < degree) {
+				resultPolinim += "+";
 			}
 			else {
-				resultPolinim += varDegree(degree - i);
+				resultPolinim += "";
 			}
-		}
-		if (polynomialÑoefficient[i + 1] >= 0 && i >= 0 && i < degree) {
-			resultPolinim += ("+");
-		}
-		else {
-			resultPolinim += ("");
 		}
 	}
 	return resultPolinim;
