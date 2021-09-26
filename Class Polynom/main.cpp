@@ -222,27 +222,41 @@ std::string Polynom::varDegree(int i) {
 	return temp;
 }
 
-std::string Polynom::outputNewPolynomials()
-{
+std::string Polynom::outputNewPolynomials() {
 	std::string resultPolinim = "";
-	std::cout << "\n\nПроизведение многочленов: ";
+	std::cout << "Получили многочлен вида: ";
 	for (int i = 0; i < degree + 1; i++) {
-		if (newPolynomials[i] != 1) {
-			resultPolinim += std::to_string(newPolynomials[i]) + varDegree(degree - i);
+		if (newPolynomials[i] == 0)
+		{
+			resultPolinim += "";
 		}
-		else {
-			if (newPolynomials[i] == 1 && (degree - i == 0)) {
-				resultPolinim += "1";
+		else if (newPolynomials[i] == 1 && (degree - i == 0)) {
+			resultPolinim += "1";
+		}
+		else if (newPolynomials[i] == -1 && (degree - i != 0)) {
+			resultPolinim += "-";
+			resultPolinim += varDegree(degree - i);
+		}
+		else if (newPolynomials[i] == 1 && (degree - i != 0)) {
+			resultPolinim += varDegree(degree - i);
+		}
+		else if (newPolynomials[i] == 1 && (degree - i == 1)) {
+			resultPolinim += "x";
+		}
+		else if (newPolynomials[i] != 1 && (degree - i == 0)) {
+			resultPolinim += std::to_string(newPolynomials[i]);
+		}
+		else if (newPolynomials[i] != 1 && (degree - i != 0)) {
+			resultPolinim += std::to_string(newPolynomials[i]);
+			resultPolinim += varDegree(degree - i);
+		}
+		if (newPolynomials[i + 1] != 0) {
+			if (newPolynomials[i + 1] >= 0 && i >= 0 && i < degree) {
+				resultPolinim += "+";
 			}
 			else {
-				resultPolinim += varDegree(degree - i);
+				resultPolinim += "";
 			}
-		}
-		if (newPolynomials[i + 1] >= 0 && i >= 0 && i < degree) {
-			resultPolinim += ("+");
-		}
-		else {
-			resultPolinim += ("");
 		}
 	}
 	return resultPolinim;
