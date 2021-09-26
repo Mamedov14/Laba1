@@ -1,8 +1,11 @@
 #include <iostream>
 #include <string>
+// äëÿ ñòåïåíåé!
 #include <io.h>
 #include <fcntl.h>
 #include <stdexcept>
+// äëÿ îñòàíîâêè êîíñîëè!
+#include <conio.h> 
 
 void MainMenu();
 int getVariant(int count);
@@ -94,6 +97,8 @@ int main() {
 	reverseÑoefficient(number1);
 	reverseÑoefficient(number2);
 
+	_getch(); //Ñîâğåìåííûé âàğèàíò
+
 	int variant;
 	do {
 		MainMenu();
@@ -184,6 +189,10 @@ std::wstring Polynom::outputPolinom() {
 		}
 		else if (polynomialÑoefficient[i] == 1 && (degree - i == 0)) {
 			resultPolinim += L"1";
+		}
+		else if (polynomialÑoefficient[i] == -1 && (degree - i != 0)) {
+			resultPolinim += L"-x";
+			resultPolinim += digitToSuperscript(degree - i);
 		}
 		else if (polynomialÑoefficient[i] == 1 && (degree - i != 0)) {
 			resultPolinim += L"x";
@@ -431,3 +440,4 @@ wchar_t digitToSuperscript(unsigned int digit) {
 		return 0x2070 + digit;
 	}
 }
+
