@@ -46,6 +46,7 @@ public:
 		inputDegree();
 		polynomialÑoefficient = new int[degree + 1];
 	}
+
 	Polynom(int degree) {
 		this->degree = degree;
 		polynomialÑoefficient = new int[degree + 1];
@@ -56,18 +57,19 @@ public:
 		newPolynomials = new int[degree];
 	}
 
-	Polynom(Polynom&& other) {
-		this->degree = other.degree;
-		this->polynomialÑoefficient = other.polynomialÑoefficient;
-		other.degree = 0;
-		other.polynomialÑoefficient = nullptr;
-	}
+	//Polynom(Polynom&& other) {
+	//	this->degree = other.degree;
+	//	this->polynomialÑoefficient = other.polynomialÑoefficient;
+	//	other.degree = 0;
+	//	other.polynomialÑoefficient = nullptr;
+	//}
 	// other - óêàçûâàåò íà êîïèğóåìûé/ïåğåìåùàåìûé îáúåêò â äğóãîé îáúåêò!
-	Polynom(Polynom& other) {
+	Polynom(const Polynom& other) {
 		this->degree = other.degree;
-		this->polynomialÑoefficient = other.polynomialÑoefficient;
-		other.degree = 0;
-		other.polynomialÑoefficient = nullptr;
+		this->polynomialÑoefficient = new int[degree + 1];
+		for (int i = 0; i < degree + 1; i++) {
+			polynomialÑoefficient[i] = other.polynomialÑoefficient[i];
+		}
 	}// =
 
 	~Polynom() {
@@ -447,6 +449,23 @@ Polynom operator-(Polynom& n1, Polynom& n2) {
 		else {
 			n3.polynomialÑoefficient[i] = -n2.polynomialÑoefficient[i];
 		}
+	}
+	bool check = true;
+	for (int i = 0; i < n1.degree; i++) {
+		if (n3.polynomialÑoefficient[i] == 0) {
+			check = true;
+		}
+		else {
+			check = false;
+			break;
+		}
+	}
+	if (check) {
+		int temp = 0;
+		return temp;
+	}
+	else {
+		return n3;
 	}
 
 	return n3;
