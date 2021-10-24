@@ -292,6 +292,9 @@ std::wstring Polynom::outputPolinom() {
 			resultPolinim += L"+";
 		}
 	}
+	if (resultPolinim[0] == L'+') {
+		resultPolinim.erase(resultPolinim.begin());
+	}
 
 	return resultPolinim;
 }
@@ -330,6 +333,9 @@ std::wstring Polynom::outputNewPolynomials() {
 		if (i != degree && newPolynomials[i + 1] > 0) {
 			resultPolinim += L"+";
 		}
+	}
+	if (resultPolinim[0] == L'+') {
+		resultPolinim.erase(resultPolinim.begin());
 	}
 
 	return resultPolinim;
