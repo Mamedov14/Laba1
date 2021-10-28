@@ -41,17 +41,17 @@ public:
 	int GetDegree() {
 		return degree;
 	}
-
+	// âûçûâàåòñÿ òîëüêî êîãäà ñîçäàşòñÿ ìíîãî÷ëåíû äëÿ ââåäåíèÿ ñ êëàâèàòóğû.
 	Polynom() {
 		inputDegree();
 		polynomialÑoefficient = new int[degree + 1];
 	}
-
+	// âûçûâàåòñÿ òîëüêî äëÿ ïîëó÷åíèÿ ñòåïåíè ìíîãî÷ëåíà, íî íèêàê äëÿ ñîçäàíèÿ.
 	Polynom(int degree) {
 		this->degree = degree;
 		polynomialÑoefficient = new int[degree + 1];
 	}
-
+	// âûçûâàåòñÿ òîëüêî äëÿ ïîëó÷åíèÿ ñòåïåíè ìíîãî÷ëåíà, íî íèêàê äëÿ ñîçäàíèÿ.
 	Polynom(int d1, int d2) {
 		degree = d1 + d2;
 		newPolynomials = new int[degree];
@@ -64,6 +64,7 @@ public:
 	//	other.polynomialÑoefficient = nullptr;
 	//}
 	// other - óêàçûâàåò íà êîïèğóåìûé/ïåğåìåùàåìûé îáúåêò â äğóãîé îáúåêò!
+
 	Polynom(const Polynom& other) {
 		this->degree = other.degree;
 		this->polynomialÑoefficient = new int[degree + 1];
@@ -71,6 +72,15 @@ public:
 			polynomialÑoefficient[i] = other.polynomialÑoefficient[i];
 		}
 	}// =
+
+	Polynom& operator= (const Polynom& other) {
+		// Âûïîëíÿåì êîïèğîâàíèå çíà÷åíèé
+		degree = other.degree;
+		polynomialÑoefficient = other.polynomialÑoefficient;
+		// Âîçâğàùàåì òåêóùèé îáúåêò, ÷òîáû èìåòü âîçìîæíîñòü ñâÿçàòü â öåïî÷êó âûïîëíåíèå íåñêîëüêèõ îïåğàöèé ïğèñâàèâàíèÿ
+		return *this;
+	}
+
 
 	~Polynom() {
 		delete[] polynomialÑoefficient;
@@ -105,7 +115,6 @@ int wmain(int argc, wchar_t* argv[]) {
 	do {
 		MainMenu();
 		variant = getVariant(6);
-
 
 		switch (variant)
 		{
@@ -471,8 +480,8 @@ Polynom operator-(Polynom& n1, Polynom& n2) {
 	return n3;
 }
 
-void reverseÑoefficient(Polynom& n)
-{
+void reverseÑoefficient(Polynom& n) {
+
 	if (n.polynomialÑoefficient != nullptr) {
 		std::reverse((n.polynomialÑoefficient), (n.polynomialÑoefficient + n.degree + 1));
 	}
